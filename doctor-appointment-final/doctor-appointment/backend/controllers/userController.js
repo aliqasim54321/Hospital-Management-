@@ -135,3 +135,18 @@ export const getMyAppointments = async (req, res) => {
     });
   }
 };
+
+export const deleteAccount = async (req, res) => {
+  try {
+
+    await Doctor.deleteOne({ _id: req.userId });
+
+    res.status(200).json({ success: true, message: "Account has been deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong! Cannot retrieve appointments.",
+    });
+  }
+};

@@ -150,19 +150,20 @@ export const getAllDoctor = async (req, res) => {
 // getDoctorProfile
 export const getDoctorProfile = async (req, res) => {
   const userId = req.userId;
+  console.log(userId)
 
   try {
     const user = await Doctor.findById(userId);
 
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
 
     const appointments = await Booking.find({ doctor: userId });
 
     const { password, ...rest } = user._doc;
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Successfully fetched profile",
       data: { ...rest, appointments },

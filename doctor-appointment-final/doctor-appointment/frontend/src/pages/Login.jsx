@@ -52,7 +52,12 @@ const Login = () => {
 
       setLoading(false);
       toast.success(result.message);
-      navigate("/home");
+      if (result.role == 'admin' || result.role == 'doctor') {
+        navigate("/doctors/profile/me");
+      }
+      else {
+        navigate("/home");
+      }
     } catch (error) {
       toast.error(error.message);
       setLoading(false);

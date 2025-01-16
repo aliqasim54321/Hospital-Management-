@@ -18,6 +18,7 @@ import reviewRouter from "../routes/review.js";
 
 const router = express.Router();
 
+router.get("/profile/me", authenticate, restrict(["doctor", "admin"]), getDoctorProfile);
 router.use("/:doctorId/reviews", reviewRouter);
 
 // get all doctors
@@ -26,6 +27,5 @@ router.get("/:id", getSingleDoctor);
 router.put("/:id", authenticate, restrict(["doctor", "admin"]), updateDoctor);
 router.delete("/:id", authenticate, doctorAuth, deleteDoctor);
 router.patch("/:id", authenticate, restrict(["admin"]), approveDoctor);
-router.get("/profile/me", authenticate, restrict(["doctor", "admin"]), getDoctorProfile);
 
 export default router;

@@ -85,28 +85,73 @@ const DateTimePicker = ({ allowedDates }) => {
   };
 
   const isDateAllowed = (date) => {
-    const dayOfWeek = getDay(date); // 0 (Sunday) to 6 (Saturday)
-    const dayString = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'][dayOfWeek];
+
+    // Helper function to parse time in HH:MM format
+    const parseTime = (timeStr) => {
+      const [hours, minutes] = timeStr.split(":").map(Number);
+      return { hours, minutes };
+    };
+
+    // Get day of the week from date
+    const dayOfWeek = date.getDay(); // 0 (Sunday) to 6 (Saturday)
+    const dayString = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"][dayOfWeek];
+
+    // Find the allowed day object
     const matchingDay = allowedDates.find(({ day }) => day === dayString);
 
-    console.log(matchingDay)
-    if (!matchingDay) return false;
+    if (!matchingDay) return false; // Day is not allowed
 
     const { startingTime, endingTime } = matchingDay;
     const { hours: startHours, minutes: startMinutes } = parseTime(startingTime);
     const { hours: endHours, minutes: endMinutes } = parseTime(endingTime);
 
-    console.log(startHours, startMinutes)
-    console.log(endHours, endMinutes)
+    // Create Date objects for the allowed start and end times
+    const start = new Date(date);
+    start.setHours(startHours, startMinutes, 0, 0); // Set hours and minutes to start time
 
-    const start = setHours(setMinutes(new Date(date), startMinutes), startHours);
-    const end = setHours(setMinutes(new Date(date), endMinutes), endHours);
+    const end = new Date(date);
+    end.setHours(endHours, endMinutes, 0, 0); // Set hours and minutes to end time
 
-    return true
-    // return date >= start && date <= end;
+
+    console.log("----------")
+    console.log(start)
+    console.log(end)
+    console.log(date)
+    console.log("----------")
+
+    // Check if the date is within the allowed range
+    return date <= start && date <= end;
   };
 
+
+  const isTimeAllowed = (date) => {
+
+    // Helper function to parse time in HH:MM format
+    const parseTime = (timeStr) => {
+      const [hours, minutes] = timeStr.split(":").map(Number);
+      return { hours, minutes };
+    };
+
+    // Extract the time part of the input date
+    const inputHours = date.getHours();
+    const inputMinutes = date.getMinutes();
+
+    // Check if the time falls within any allowed range
+    return allowedDates.some(({ startingTime, endingTime }) => {
+      const { hours: startHours, minutes: startMinutes } = parseTime(startingTime);
+      const { hours: endHours, minutes: endMinutes } = parseTime(endingTime);
+
+      const inputTotalMinutes = inputHours * 60 + inputMinutes;
+      const startTotalMinutes = startHours * 60 + startMinutes;
+      const endTotalMinutes = endHours * 60 + endMinutes;
+
+      return inputTotalMinutes >= startTotalMinutes && inputTotalMinutes <= endTotalMinutes;
+    });
+  };
+
+
   const filterDates = (date) => isDateAllowed(date);
+  const filterTime = (date) => isTimeAllowed(date)
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -126,6 +171,7 @@ const DateTimePicker = ({ allowedDates }) => {
           timeCaption="Time"
           dateFormat="MMMM d, yyyy h:mm aa"
           filterDate={filterDates}
+          filterTime={filterTime}
         />
       </span>
     </div>

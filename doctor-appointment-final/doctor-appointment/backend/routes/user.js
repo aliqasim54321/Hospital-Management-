@@ -11,6 +11,7 @@ import {
   getSingleUser,
   updateUser,
   getMyAppointments,
+  deleteAccount
 } from "../controllers/userController.js";
 import express from "express";
 
@@ -23,11 +24,15 @@ router.put("/:id", authenticate, patientAuth, updateUser);
 router.delete("/:id", authenticate, patientAuth, deleteUser);
 
 router.get("/profile/me", authenticate, restrict(["patient"]), getUserProfile);
+router.get("/profile/delete", authenticate,  deleteAccount);
+
 router.get(
   "/appointments/my-appointments",
   authenticate,
   restrict(["patient"]),
   getMyAppointments
 );
+
+
 
 export default router;
