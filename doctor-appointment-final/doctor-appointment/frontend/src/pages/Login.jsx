@@ -56,8 +56,8 @@ const Login = () => {
         navigate("/doctors/profile/me");
       }
       else {
-        navigate("/home");
-      }
+        navigate("/users/profile/me");
+            }
     } catch (error) {
       toast.error(error.message);
       setLoading(false);
