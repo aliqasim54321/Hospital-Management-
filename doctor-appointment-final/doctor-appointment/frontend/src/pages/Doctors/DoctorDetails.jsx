@@ -32,6 +32,7 @@ const DoctorDetails = () => {
     specialization,
     ticketPrice,
     photo,
+    appointmentLink
   } = doctor;
 
   return (
@@ -83,19 +84,17 @@ const DoctorDetails = () => {
                 <div>
                   <button
                     onClick={() => setTab("about")}
-                    className={`${
-                      tab === "about" &&
+                    className={`${tab === "about" &&
                       "border-b border-solid border-[#0067FF]"
-                    }  p-2 mr-5 px-5  text-headingColor font-semibold text-[16px] leading-7  `}
+                      }  p-2 mr-5 px-5  text-headingColor font-semibold text-[16px] leading-7  `}
                   >
                     About
                   </button>
                   <button
                     onClick={() => setTab("feedback")}
-                    className={`${
-                      tab === "feedback" &&
+                    className={`${tab === "feedback" &&
                       "border-b border-solid border-[#0067FF]"
-                    } py-2 px-5  font-semibold text-headingColor text-[16px] leading-7 `}
+                      } py-2 px-5  font-semibold text-headingColor text-[16px] leading-7 `}
                   >
                     Feedback
                   </button>
@@ -125,6 +124,7 @@ const DoctorDetails = () => {
                 doctorId={doctor._id}
                 ticketPrice={ticketPrice}
                 timeSlots={timeSlots}
+                appointmentLink={appointmentLink}
               />
             </div>
           </div>

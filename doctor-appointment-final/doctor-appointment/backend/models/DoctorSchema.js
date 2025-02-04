@@ -38,6 +38,10 @@ const DoctorSchema = new mongoose.Schema({
     enum: ["pending", "approved", "cancelled"],
     default: "pending",
   },
+  appointmentLink: {
+    type: String,
+    required: true
+  }
 });
 
 export default mongoose.model("Doctor", DoctorSchema);

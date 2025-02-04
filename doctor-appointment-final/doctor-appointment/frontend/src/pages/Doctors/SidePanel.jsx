@@ -4,7 +4,7 @@ import convertTime from "../../utils/convertTime";
 import { BASE_URL, token } from "./../../config";
 import { useState } from "react";
 
-const SidePanel = ({ ticketPrice, timeSlots, doctorId }) => {
+const SidePanel = ({ ticketPrice, timeSlots, doctorId, appointmentLink }) => {
   const bookingHandler = async () => {
     try {
       const response = await fetch(
@@ -42,10 +42,9 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId }) => {
         </span>
       </div>
 
-      <div className="mt-[30px]">
+      {/* <div className="mt-[30px]">
         <p className="text__para mt-0 font-semibold text-headingColor">
           Available Time Slots:
-          {/* {JSON.stringify(timeSlots)} */}
         </p>
         <ul className="mt-3">
           {timeSlots?.map((item, index) => (
@@ -62,11 +61,19 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId }) => {
           ))}
         </ul>
       </div>
+      <DateTimePicker allowedDates={timeSlots} /> */}
 
-      <DateTimePicker allowedDates={timeSlots} />
-      <button onClick={bookingHandler} className="px-2 btn w-full rounded-md">
+      {/* <button onClick={bookingHandler} className="px-2 btn w-full rounded-md">
         Book Appointment
-      </button>
+      </button> */}
+
+      <a href={appointmentLink}  >
+        <button className="px-2 btn w-full rounded-md">
+          Book Appointment
+        </button>
+      </a>
+
+
     </div>
   );
 };
