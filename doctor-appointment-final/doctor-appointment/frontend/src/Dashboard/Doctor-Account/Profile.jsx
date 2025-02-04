@@ -22,6 +22,7 @@ const Profile = ({ doctorData }) => {
     experiences: [],
     specialization: "",
     timeSlots: [],
+    appointmentLink: ""
   });
 
   useEffect(() => {
@@ -197,6 +198,19 @@ const Profile = ({ doctorData }) => {
             onChange={handleInputChange}
             name="phone"
             placeholder="Phone Number"
+            className="form__input"
+          />
+        </div>
+
+        <div className="mb-5">
+          <p className="form__label">Calendy Link*</p>
+          <input
+            type="text"
+            value={formData.appointmentLink}
+            onChange={handleInputChange}
+            name="appointmentLink"
+            maxLength={100}
+            placeholder="Calendy Link"
             className="form__input"
           />
         </div>
