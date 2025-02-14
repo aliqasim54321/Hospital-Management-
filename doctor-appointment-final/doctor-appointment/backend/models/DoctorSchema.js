@@ -40,7 +40,7 @@ const DoctorSchema = new mongoose.Schema({
   },
   appointmentLink: {
     type: String,
-    required: true
+    required: false
   }
 });
 
